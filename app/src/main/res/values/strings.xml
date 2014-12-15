@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">E-emergency_2_0_2</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="send_to_server">Wyślij na serwer</string>
+
+
+    <!-- TabsTitles -->
+    <string name="title_section1">Dane osobowe</string>
+    <string name="title_section2">Stan Pacjenta</string>
+    <string name="title_section3">Diagram obrażeń</string>
+    <string name="title_section4">Zdarzenia i alerty</string>
+
+    <!-- PatientDataFragment -->
+    <string name="first_name">Imię</string>
+    <string name="last_name">Nazwisko</string>
+    <string name="age">Wiek</string>
+    <string name="sex">Płeć</string>
+    <string name="phone_nr">Ne tel.</string>
+    <string name="pesel">PESEL</string>
+    <string name="insurance_nr">Nr ubezp.</string>
+    <string name="woman">Kobieta</string>
+    <string name="man">Mężczyzna</string>
+    <string name="identify">Identyfikuj</string>
+    <string name="no_name">N. N.</string>
+    <string name="agreement_on_help">Zgoda na udzielenie pomocy</string>
+    <string name="help_date_and_time">Data i czas udzielenia pomocy</string>
+    <string name="destination_sor">Docelowy SOR</string>
+    <string name="sace_changes">Zapisz zmiany</string>
+    <string name="no_transport">Bez transportu</string>
+    <string name="arrival">Dojazd na miejsce</string>
+
+
+
+</resources>
