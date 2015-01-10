@@ -1,88 +1,123 @@
 package com.pp.rafix.e_emergency_2_0_2.activities;
 
-import android.app.AlertDialog;
-import android.app.ExpandableListActivity;
-import android.content.DialogInterface;
+import android.app.ListActivity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ExpandableListView;
-import android.widget.SimpleCursorTreeAdapter;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
+import com.pp.rafix.e_emergency_2_0_2.EemergencyAplication;
 import com.pp.rafix.e_emergency_2_0_2.R;
-import com.pp.rafix.e_emergency_2_0_2.database.MyDatabaseOpenHelper;
+import com.pp.rafix.e_emergency_2_0_2.models.PatientModel;
+import com.pp.rafix.e_emergency_2_0_2.models.TeamMemberModel;
+import com.pp.rafix.e_emergency_2_0_2.models.TeamModel;
+import com.pp.rafix.e_emergency_2_0_2.rest.RestService;
 
-public class LoginActivity extends ExpandableListActivity {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-    private SQLiteDatabase db;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import retrofit.RetrofitError;
+
+public class LoginActivity extends ListActivity {
+
+    @InjectView(R.id.progressBar) ProgressBar progressBar;
+
+    ArrayList<TeamModel> teams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.inject(this);
 
-        db= MyDatabaseOpenHelper.getInstance(this).getWritableDatabase();
-
-        createAdapter();
-
-        setListViewOnClickListener();
+        startAsyncTask();
     }
 
-    private void setListViewOnClickListener() {
-        getExpandableListView().setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+    private void startAsyncTask(){
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        //get sors and teams asynchronously
+        new AsyncTask<Void, Void, RetrofitError>() {
             @Override
-            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+            protected RetrofitError doInBackground(Void... params) {
 
-                int groupCount = getExpandableListAdapter().getGroupCount();
+                RestService service = EemergencyAplication.getRestClient().getRestService();
 
-                if(!expandableListView.isGroupExpanded(i)){
-                    expandableListView.expandGroup(i);
+                try {
+                    teams = service.getTeams();
+                    EemergencyAplication.setSorList(service.getSors());
+
+
+
+                }catch (RetrofitError error){
+                    return error;
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(RetrofitError error) {
+
+                progressBar.setVisibility(View.GONE);
+
+                if(error == null){
+
+                    setListAdapter();
                 }else{
-                    expandableListView.collapseGroup(i);
+                    Toast.makeText(LoginActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                    Log.e(LoginActivity.class.getSimpleName(), error.toString());
                 }
-
-                for (int j=0; j<groupCount; j++){
-                    if(expandableListView.isGroupExpanded(j) && j!=i)
-                        expandableListView.collapseGroup(j);
-
-                }
-
-                expandableListView.setItemChecked(i,true);
-
-                return true;
             }
-        });
+        }.execute();
     }
 
-    private void createAdapter() {
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
 
-        Cursor groupCursor = db.rawQuery("select * from crew", null);
+        PatientModel.getInstance().setTeamId(teams.get(position).id);
+        PatientModel.getInstance().setTeamName(teams.get(position).name);
 
+        Intent intent = new Intent(this, TabsActivity.class);
+        startActivity(intent);
+    }
 
-        SimpleCursorTreeAdapter adapter = new SimpleCursorTreeAdapter(this, groupCursor,
-                R.layout.layout,
-                new String[]{"name"},
-                new int[]{android.R.id.text1},
-                android.R.layout.simple_list_item_1,
-                new String[]{"memberName"},
-                new int[]{android.R.id.text1}
-        ) {
-            @Override
-            protected Cursor getChildrenCursor(Cursor groupCursor) {
+    private void setListAdapter(){
 
-                //get column by name
-                String crewId = groupCursor.getString(groupCursor.getColumnIndex("_id"));
+        // create the grid item mapping
+        String[] from = new String[] {"name", "crew"};
+        int[] to = new int[] { android.R.id.text1, android.R.id.text2 };
 
-                return db.rawQuery("select e._id, (firstname||' '||lastname) as memberName " +
-                        "from crew_employee c JOIN employee e ON (employee_id=e._id) " +
-                        " where c.crew_id="+crewId, null);
+        // prepare the list of all records
+        List<HashMap<String, String>> crews = new ArrayList<HashMap<String, String>>();
+
+        for(TeamModel team : teams){
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("name", team.name);
+
+            String crew = "";
+            for(TeamMemberModel teamMember: team.members){
+                crew+= teamMember.firstName + " " + teamMember.lastName + ", ";
             }
-        };
+            crew = crew.substring(0, crew.length()-2);
 
+            map.put("crew", crew);
+            crews.add(map);
+        }
+
+        // fill in the grid_item layout
+        SimpleAdapter adapter = new SimpleAdapter(this, crews, android.R.layout.simple_list_item_2, from, to);
         setListAdapter(adapter);
     }
 
@@ -90,47 +125,18 @@ public class LoginActivity extends ExpandableListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.login, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-    }
 
-    public void loginOnClick(View v){
-        Intent intent = new Intent(this,TabsActivity.class);
-        startActivity(intent);
-    }
-
-    public void deleteOnClick(View v){
-
-        // 1. Instantiate an AlertDialog.Builder with its constructor
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        // 2. Chain together various setter methods to set the dialog characteristics
-        builder.setMessage("Czy na pewno chcesz usunac zaloge?")
-                .setTitle("Uwaga!");
-
-        builder.setPositiveButton("Usun", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK button
-                //db.delete("crew_employee");
-            }
-        });
-        builder.setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User cancelled the dialog
-            }
-        });
-
-        // 3. Get the AlertDialog from create()
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        switch (item.getItemId()){
+            case R.id.action_refresh:
+                startAsyncTask();
+                return true;
+            default:
+                return  super.onOptionsItemSelected(item);
+        }
     }
 }

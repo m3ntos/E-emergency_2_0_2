@@ -17,9 +17,12 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.pp.rafix.e_emergency_2_0_2.EemergencyAplication;
 import com.pp.rafix.e_emergency_2_0_2.R;
 import com.pp.rafix.e_emergency_2_0_2.models.PatientModel;
+import com.pp.rafix.e_emergency_2_0_2.rest.RestService;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -27,6 +30,9 @@ import java.util.Calendar;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,7 +53,7 @@ public class PatientDataFragment extends Fragment {
     @InjectView(R.id.editTextTime) EditText time;
     @InjectView(R.id.spinnerDestinationSOR) Spinner destinationSOR;
 
-    ArrayAdapter<CharSequence> destinationSORAdapter;
+    ArrayAdapter<String> destinationSORAdapter;
 
     public PatientDataFragment() {
         // Required empty public constructor
@@ -76,9 +82,9 @@ public class PatientDataFragment extends Fragment {
         //TODO: set real list
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        destinationSORAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.sor_array, android.R.layout.simple_spinner_item);
 
+
+        destinationSORAdapter =  new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, EemergencyAplication.getSorList());
         destinationSORAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         destinationSOR.setAdapter(destinationSORAdapter);
 
@@ -143,6 +149,36 @@ public class PatientDataFragment extends Fragment {
         };
         newFragment.show(getFragmentManager(), "timePicker");
 
+    }
+
+    @OnClick(R.id.buttonIdentify)
+    public void identify() {
+
+        RestService service = EemergencyAplication.getRestClient().getRestService();
+
+        service.getPatientData(PatientModel.getInstance(), new Callback<PatientModel>() {
+            @Override
+            public void success(PatientModel patientModel, Response response) {
+                Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+
+                //set fields
+                firstName.setText(patientModel.getFirstName());
+                lastName.setText(patientModel.getLastName());
+                age.setText(patientModel.getAge());
+
+                if ("M".equals(patientModel.getSex())) sex.check(R.id.radioButtonMan);
+                if ("F".equals(patientModel.getSex())) sex.check(R.id.radioButtonWoman);
+
+                phoneNr.setText(patientModel.getPhoneNr());
+                PESEL.setText(patientModel.getPESEL());
+                insuranceNr.setText(patientModel.getInsuranceNumber());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(getActivity(), "fail", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

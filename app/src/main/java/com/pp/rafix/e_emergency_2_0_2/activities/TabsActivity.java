@@ -84,6 +84,8 @@ public class TabsActivity extends Activity implements ActionBar.TabListener {
         int id = item.getItemId();
         if (id == R.id.action_send_to_Server) {
             String json = new Gson().toJson(PatientModel.getInstance());
+
+
             return true;
         }
         return super.onOptionsItemSelected(item);

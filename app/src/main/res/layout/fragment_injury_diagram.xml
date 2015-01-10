@@ -11,5 +11,5 @@
         android:id="@+id/imageViewInjuryDiagram"
         android:layout_gravity="center_horizontal|top"
         android:src="@drawable/injury_diagram"
-        android:adjustViewBounds="true" />
+       />
 </FrameLayout>

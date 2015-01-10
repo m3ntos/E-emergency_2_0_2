@@ -182,7 +182,8 @@
             android:layout_row="5"
             android:layout_column="2"
             android:layout_rowSpan="2"
-            android:layout_gravity="center_vertical|fill" />
+            android:layout_gravity="center_vertical|fill"
+            android:gravity="center" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -264,7 +265,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_below="@+id/tableLayout"
-        android:layout_alignStart="@+id/tableLayout" />
+        android:layout_alignLeft="@+id/tableLayout" />
 
     <Button
         android:layout_width="wrap_content"
@@ -274,6 +275,6 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_alignTop="@+id/buttonArrival"
-        android:layout_toEndOf="@+id/buttonArrival" />
+        android:layout_toRightOf="@+id/buttonArrival" />
 
 </RelativeLayout>

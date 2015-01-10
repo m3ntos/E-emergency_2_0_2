@@ -24,6 +24,9 @@ public class PatientModel {
     boolean arrival = false;
     boolean noTransport = false;
 
+    int teamId;
+    String teamName;
+
     ArrayList<InjuryModel> injuries = new ArrayList<>();
 
     private PatientModel(){}
@@ -139,6 +142,50 @@ public class PatientModel {
 
     public void setNoTransport(boolean noTransport) {
         this.noTransport = noTransport;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public String getPhoneNr() {
+        return phoneNr;
+    }
+
+    public String getPESEL() {
+        return PESEL;
+    }
+
+    public String getInsuranceNumber() {
+        return insuranceNumber;
     }
 
 }
