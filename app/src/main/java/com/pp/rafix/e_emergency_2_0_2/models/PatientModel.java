@@ -20,7 +20,7 @@ public class PatientModel {
     boolean agreementOnAsistance;
     String helpDate;
     String helpTime;
-    String DestinationSor;
+    SolrModel DestinationSor;
     boolean arrival = false;
     boolean noTransport = false;
 
@@ -132,7 +132,7 @@ public class PatientModel {
         this.helpTime = helpTime;
     }
 
-    public void setDestinationSor(String destinationSor) {
+    public void setDestinationSor(SolrModel destinationSor) {
         DestinationSor = destinationSor;
     }
 

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.pp.rafix.e_emergency_2_0_2.EemergencyAplication;
 import com.pp.rafix.e_emergency_2_0_2.R;
 import com.pp.rafix.e_emergency_2_0_2.models.PatientModel;
+import com.pp.rafix.e_emergency_2_0_2.models.SolrModel;
 import com.pp.rafix.e_emergency_2_0_2.rest.RestService;
 
 import java.text.SimpleDateFormat;
@@ -53,7 +54,7 @@ public class PatientDataFragment extends Fragment {
     @InjectView(R.id.editTextTime) EditText time;
     @InjectView(R.id.spinnerDestinationSOR) Spinner destinationSOR;
 
-    ArrayAdapter<String> destinationSORAdapter;
+    ArrayAdapter<SolrModel> destinationSORAdapter;
 
     public PatientDataFragment() {
         // Required empty public constructor
@@ -116,7 +117,7 @@ public class PatientDataFragment extends Fragment {
         model.setAgreementOnAsistance(agreementOnHelp.isChecked());
         model.setHelpDate(date.getText().toString());
         model.setHelpTime(time.getText().toString());
-        model.setDestinationSor(destinationSORAdapter.getItem(destinationSOR.getSelectedItemPosition()).toString());
+        model.setDestinationSor(destinationSORAdapter.getItem(destinationSOR.getSelectedItemPosition()));
     }
 
     @OnClick(R.id.editTextDate)

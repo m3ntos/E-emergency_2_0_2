@@ -1,6 +1,7 @@
 package com.pp.rafix.e_emergency_2_0_2.rest;
 
 import com.pp.rafix.e_emergency_2_0_2.models.PatientModel;
+import com.pp.rafix.e_emergency_2_0_2.models.SolrModel;
 import com.pp.rafix.e_emergency_2_0_2.models.TeamModel;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public interface RestService {
     public ArrayList<TeamModel> getTeams();
 
     @POST("/sors")
-    public ArrayList<String> getSors();
+    public ArrayList<SolrModel> getSors();
 
     @POST("/sendpatientdata")
     public void sandPatientData( @Body PatientModel patient, Callback<PatientModel> cb);

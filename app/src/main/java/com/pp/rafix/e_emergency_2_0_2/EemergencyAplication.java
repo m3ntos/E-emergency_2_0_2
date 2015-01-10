@@ -2,6 +2,7 @@ package com.pp.rafix.e_emergency_2_0_2;
 
 import android.app.Application;
 
+import com.pp.rafix.e_emergency_2_0_2.models.SolrModel;
 import com.pp.rafix.e_emergency_2_0_2.rest.RestClient;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class EemergencyAplication extends Application {
 
     private static RestClient restClient;
-    private static ArrayList<String> sorList;
+    private static ArrayList<SolrModel> sorList;
 
     @Override
     public void onCreate() {
@@ -25,11 +26,11 @@ public class EemergencyAplication extends Application {
         return restClient;
     }
 
-    public static ArrayList<String> getSorList() {
+    public static ArrayList<SolrModel> getSorList() {
         return sorList;
     }
 
-    public static void setSorList(ArrayList<String> sorList) {
+    public static void setSorList(ArrayList<SolrModel> sorList) {
         EemergencyAplication.sorList = sorList;
     }
 }
