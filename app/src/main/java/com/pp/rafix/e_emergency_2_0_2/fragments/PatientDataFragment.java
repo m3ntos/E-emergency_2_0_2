@@ -157,6 +157,9 @@ public class PatientDataFragment extends Fragment {
 
         RestService service = EemergencyAplication.getRestClient().getRestService();
 
+        PatientModel.getInstance().setPESEL(PESEL.getText().toString());
+        PatientModel.getInstance().setInsuranceNumber(insuranceNr.getText().toString());
+
         service.getPatientData(PatientModel.getInstance(), new Callback<PatientModel>() {
             @Override
             public void success(PatientModel patientModel, Response response) {
