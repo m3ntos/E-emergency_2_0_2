@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.pp.rafix.e_emergency_2_0_2.fragments.InjuryDiagramFragment">
@@ -6,10 +6,32 @@
     <!-- TODO: Update blank fragment layout -->
 
     <ImageView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageViewInjuryDiagram"
         android:layout_gravity="center_horizontal|top"
         android:src="@drawable/injury_diagram"
-       />
-</FrameLayout>
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/injuryTypeSpinner"
+        android:layout_gravity="center"
+        android:layout_below="@+id/imageViewInjuryDiagram"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignLeft="@+id/imageViewInjuryDiagram"
+        android:layout_alignStart="@+id/imageViewInjuryDiagram"
+        android:layout_alignRight="@+id/imageViewInjuryDiagram"
+        android:layout_alignEnd="@+id/imageViewInjuryDiagram" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cofnij"
+        android:id="@+id/buttonBack"
+        android:layout_below="@+id/injuryTypeSpinner"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

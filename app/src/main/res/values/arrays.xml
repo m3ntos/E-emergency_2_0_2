@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="sor_array">
-        <item>SOR 1</item>
-        <item>SOR 2</item>
-        <item>SOR 3</item>
-        <item>SOR 4</item>
+    <string-array name="injury_diagram_array">
+        <item>Krwotok</item>
+        <item>Amputacja</item>
+        <item>Zmiażdżenie</item>
+        <item>Rana</item>
+        <item>Złamanie (skręcenie)</item>
+        <item>Złamanie otwarte</item>
+        <item>Zwichnięcie</item>
+        <item>Stłuczenie</item>
+        <item>Ciało obce</item>
+        <item>Oparzenie I stopnia</item>
+        <item>Oparzenie II stopnia</item>
+        <item>Oparzenie III stopnia</item>
    </string-array>
+
+    <string-array name="injury_diagram_shortcuts_array">
+        <item>K</item>
+        <item>A</item>
+        <item>ZM</item>
+        <item>R</item>
+        <item>ZŁ(S)</item>
+        <item>ZO</item>
+        <item>ZW</item>
+        <item>ST</item>
+        <item>CO</item>
+        <item>OP I</item>
+        <item>OP II</item>
+        <item>OP III</item>
+    </string-array>
 </resources>

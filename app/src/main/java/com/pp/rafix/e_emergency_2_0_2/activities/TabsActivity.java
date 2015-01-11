@@ -10,15 +10,22 @@ import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.pp.rafix.e_emergency_2_0_2.EemergencyAplication;
 import com.pp.rafix.e_emergency_2_0_2.R;
 import com.pp.rafix.e_emergency_2_0_2.fragments.InjuryDiagramFragment;
 import com.pp.rafix.e_emergency_2_0_2.fragments.PatientDataFragment;
 import com.pp.rafix.e_emergency_2_0_2.fragments.PatientStateFragment;
 import com.pp.rafix.e_emergency_2_0_2.models.PatientModel;
+import com.pp.rafix.e_emergency_2_0_2.rest.RestService;
 
 import java.util.Locale;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class TabsActivity extends Activity implements ActionBar.TabListener {
 
@@ -84,6 +91,20 @@ public class TabsActivity extends Activity implements ActionBar.TabListener {
         int id = item.getItemId();
         if (id == R.id.action_send_to_Server) {
             String json = new Gson().toJson(PatientModel.getInstance());
+            RestService service = EemergencyAplication.getRestClient().getRestService();
+
+             service.sendPatientData(PatientModel.getInstance(), new Callback<PatientModel>() {
+                @Override
+                public void success(PatientModel patientModel, Response response) {
+                    Toast.makeText(TabsActivity.this, "success", Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Toast.makeText(TabsActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                }
+            });
 
 
             return true;

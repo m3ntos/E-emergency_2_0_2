@@ -29,6 +29,9 @@ public class PatientModel {
 
     ArrayList<InjuryModel> injuries = new ArrayList<>();
 
+    ArrayList<InjuryDiagramModel> diagramInjuries = new ArrayList<>();
+
+
     private PatientModel(){}
 
     public static PatientModel getInstance(){
@@ -86,6 +89,24 @@ public class PatientModel {
         InjuryTreatmentModel injuryTreatment = new InjuryTreatmentModel(treatmentId, treatmentName);
 
         return injuries.contains(injury) && injuries.get(injuries.indexOf(injury)).getInjuryTreatments().contains(injuryTreatment);
+    }
+
+    public void removeLastDiagramInjury(){
+        if(diagramInjuries.size()>0)
+            diagramInjuries.remove(diagramInjuries.size()-1);
+    }
+
+    public void addDiagramInjury(InjuryDiagramModel injury){
+
+        diagramInjuries.add(injury);
+    }
+
+    public ArrayList<InjuryDiagramModel> getDiagramInjuries() {
+        return diagramInjuries;
+    }
+
+    public void setDiagramInjuries(ArrayList<InjuryDiagramModel> diagramInjuries) {
+        this.diagramInjuries = diagramInjuries;
     }
 
     public void setFirstName(String firstName) {

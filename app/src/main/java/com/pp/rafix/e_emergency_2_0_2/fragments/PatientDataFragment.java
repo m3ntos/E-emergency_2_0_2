@@ -79,12 +79,6 @@ public class PatientDataFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //set destination SOR list
-        //TODO: set real list
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
-
-
         destinationSORAdapter =  new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, EemergencyAplication.getSorList());
         destinationSORAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         destinationSOR.setAdapter(destinationSORAdapter);

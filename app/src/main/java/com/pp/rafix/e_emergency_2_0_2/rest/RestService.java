@@ -25,6 +25,6 @@ public interface RestService {
     public ArrayList<SolrModel> getSors();
 
     @POST("/sendpatientdata")
-    public void sandPatientData( @Body PatientModel patient, Callback<PatientModel> cb);
+    public void sendPatientData( @Body PatientModel patient, Callback<PatientModel> cb);
 
 }
