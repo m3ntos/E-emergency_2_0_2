@@ -42,6 +42,15 @@ public class PatientModel {
         return instance;
     }
 
+    public void clearPatientData(){
+
+        PatientModel newPatient = new PatientModel();
+        newPatient.teamId = instance.teamId;
+        newPatient.teamName = instance.teamName;
+
+        instance = newPatient;
+    }
+
     public void addInjury(int injuryId, String injuryName, int treatmentId, String treatmentName){
 
         InjuryTreatmentModel injuryTreatment = new InjuryTreatmentModel(treatmentId, treatmentName);

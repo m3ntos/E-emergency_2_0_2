@@ -11,7 +11,7 @@ import retrofit.RestAdapter;
  */
 public class RestClient {
 
-    private static final String BASE_URL = "http://192.168.0.11:8080";
+    private static final String BASE_URL = "http://dev.noblesoft.pl:8080";
     private RestService apiService;
 
     public RestClient()

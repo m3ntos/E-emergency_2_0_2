@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.pp.rafix.e_emergency_2_0_2.EemergencyAplication;
 import com.pp.rafix.e_emergency_2_0_2.R;
 import com.pp.rafix.e_emergency_2_0_2.models.PatientModel;
@@ -58,7 +59,11 @@ public class LoginActivity extends ListActivity {
                     teams = service.getTeams();
                     EemergencyAplication.setSorList(service.getSors());
 
+                    String teamsJson = new Gson().toJson(teams);
+                    String sorsJson = new Gson().toJson(service.getSors());
 
+                    Log.d("json",teamsJson);
+                    Log.d("json",sorsJson);
 
                 }catch (RetrofitError error){
                     return error;
@@ -75,7 +80,7 @@ public class LoginActivity extends ListActivity {
 
                     setListAdapter();
                 }else{
-                    Toast.makeText(LoginActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, getString(R.string.connection_to_server_failed), Toast.LENGTH_LONG).show();
                     Log.e(LoginActivity.class.getSimpleName(), error.toString());
                 }
             }

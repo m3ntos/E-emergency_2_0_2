@@ -53,6 +53,7 @@ public class PatientDataFragment extends Fragment {
     @InjectView(R.id.editTextDate) EditText date;
     @InjectView(R.id.editTextTime) EditText time;
     @InjectView(R.id.spinnerDestinationSOR) Spinner destinationSOR;
+    @InjectView(R.id.radioGroupTransport) RadioGroup transport;
 
     ArrayAdapter<SolrModel> destinationSORAdapter;
 
@@ -112,6 +113,19 @@ public class PatientDataFragment extends Fragment {
         model.setHelpDate(date.getText().toString());
         model.setHelpTime(time.getText().toString());
         model.setDestinationSor(destinationSORAdapter.getItem(destinationSOR.getSelectedItemPosition()));
+
+        switch (transport.getCheckedRadioButtonId()){
+            case R.id.buttonNoTransport:
+                model.setNoTransport(true);
+                break;
+            case R.id.buttonArrival:
+                model.setArrival(true);
+                break;
+            default:
+        }
+
+        Toast.makeText(getActivity(),"Zapisano", Toast.LENGTH_SHORT).show();
+
     }
 
     @OnClick(R.id.editTextDate)
@@ -157,7 +171,7 @@ public class PatientDataFragment extends Fragment {
         service.getPatientData(PatientModel.getInstance(), new Callback<PatientModel>() {
             @Override
             public void success(PatientModel patientModel, Response response) {
-                Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
 
                 //set fields
                 firstName.setText(patientModel.getFirstName());
@@ -174,7 +188,7 @@ public class PatientDataFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getActivity(), "fail", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
             }
         });
     }

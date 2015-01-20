@@ -31,7 +31,10 @@
     <string name="sace_changes">Zapisz zmiany</string>
     <string name="no_transport">Bez transportu</string>
     <string name="arrival">Dojazd na miejsce</string>
-
+    <string name="connection_to_server_failed">Nie udało się połączyć z serwerem</string>
+    <string name="sending_data_failed">Wysłanie danych nie powiodło się</string>
+    <string name="data_sent">Wysłano</string>
+    <string name="new_patient">Nowy pacjent</string>
 
 
 </resources>

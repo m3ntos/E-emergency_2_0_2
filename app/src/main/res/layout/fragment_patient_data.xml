@@ -238,16 +238,8 @@
             android:layout_column="0"
             android:layout_gravity="center_vertical" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sace_changes"
-            android:id="@+id/buttonSaveChanges"
-            android:layout_row="12"
-            android:layout_column="2" />
-
         <Spinner
-            android:layout_width="100dp"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:id="@+id/spinnerDestinationSOR"
             android:layout_row="11"
@@ -256,18 +248,16 @@
             android:spinnerMode="dropdown" />
 
     </GridLayout>
-
-    <Button
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/arrival"
-        android:id="@+id/buttonArrival"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:id="@+id/radioGroupTransport"
         android:layout_below="@+id/tableLayout"
-        android:layout_alignLeft="@+id/tableLayout" />
+        android:layout_alignLeft="@+id/tableLayout"
+        android:layout_alignStart="@+id/tableLayout"
+        android:orientation="horizontal">
 
-    <Button
+        <RadioButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/no_transport"
@@ -275,6 +265,29 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_alignTop="@+id/buttonArrival"
-        android:layout_toRightOf="@+id/buttonArrival" />
+        android:layout_toRightOf="@+id/buttonArrival"
+            android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/arrival"
+            android:id="@+id/buttonArrival"
+            android:layout_below="@+id/tableLayout"
+            android:layout_alignLeft="@+id/tableLayout"
+            android:layout_alignStart="@+id/tableLayout"
+            android:checked="false" />
+    </RadioGroup>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sace_changes"
+        android:id="@+id/buttonSaveChanges"
+        android:layout_row="12"
+        android:layout_column="2"
+        android:layout_below="@+id/radioGroupTransport"
+        android:layout_alignRight="@+id/tableLayout"
+        android:layout_alignEnd="@+id/tableLayout" />
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -91,23 +92,30 @@ public class TabsActivity extends Activity implements ActionBar.TabListener {
         int id = item.getItemId();
         if (id == R.id.action_send_to_Server) {
             String json = new Gson().toJson(PatientModel.getInstance());
+            Log.d("json", json);
             RestService service = EemergencyAplication.getRestClient().getRestService();
 
              service.sendPatientData(PatientModel.getInstance(), new Callback<PatientModel>() {
                 @Override
                 public void success(PatientModel patientModel, Response response) {
-                    Toast.makeText(TabsActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TabsActivity.this, getString(R.string.data_sent), Toast.LENGTH_SHORT).show();
 
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(TabsActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TabsActivity.this, getString(R.string.sending_data_failed), Toast.LENGTH_SHORT).show();
                 }
             });
 
 
             return true;
+        }
+        if(id == R.id.action_new_patient){
+
+            PatientModel.getInstance().clearPatientData();
+            finish();
+            startActivity(getIntent());
         }
         return super.onOptionsItemSelected(item);
     }

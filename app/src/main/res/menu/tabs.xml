@@ -3,5 +3,9 @@
         android:title="@string/send_to_server"
         android:orderInCategory="1"
         android:showAsAction="always" />
+    <item android:id="@+id/action_new_patient"
+        android:title="@string/new_patient"
+        android:orderInCategory="2"
+        android:showAsAction="always" />
 
 </menu>
